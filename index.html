@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>gif-stream</title>
+  <style type="text/css">
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+
+      font-size: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="image-container"></div>
+  <script type="text/javascript" src="dist/gif-stream.js"></script>
+  <script type="text/javascript">
+    const container = document.getElementById('image-container')
+
+    function handler(data) {
+      const image = document.createElement('img')
+      image.setAttribute('src', data.imageData)
+      container.appendChild(image)
+    }
+
+    const options = {
+      callback: handler,
+      interval: 1000,
+    }
+
+    const stream = new GifStream(options)
+    stream.start()
+      .then(() => {
+        console.log('GifStream is ready')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  </script>
+</body>
+</html>

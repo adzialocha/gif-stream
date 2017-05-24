@@ -1,0 +1,24 @@
+{
+  "name": "gif-stream",
+  "description": "",
+  "version": "0.1.0",
+  "main": "dist/gif-stream.js",
+  "authors": [
+    "Andreas Dzialocha"
+  ],
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/adzialocha/gif-stream.git"
+  },
+  "homepage": "https://github.com/adzialocha/gif-stream",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "src",
+    "*.config.js"
+  ]
+}
