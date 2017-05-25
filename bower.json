@@ -1,6 +1,6 @@
 {
   "name": "gif-stream",
-  "description": "",
+  "description": "Take pictures from peoples cameras in intervals, make a .gif, upload it to S3, make a massive collage out of this",
   "version": "0.1.0",
   "main": "dist/gif-stream.js",
   "authors": [

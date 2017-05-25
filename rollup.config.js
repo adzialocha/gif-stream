@@ -3,7 +3,7 @@ import uglify from 'rollup-plugin-uglify'
 import cleanup from 'rollup-plugin-cleanup'
 
 const options = {
-  entry: 'src/index.js',
+  entry: 'src/stream.js',
   dest: 'dist/gif-stream.js',
   sourceMap: true,
   moduleName: 'GifStream',

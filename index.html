@@ -15,29 +15,55 @@
 </head>
 <body>
   <div id="image-container"></div>
+  <button id="start">Start</button>
+  <button id="stop">Stop</button>
   <script type="text/javascript" src="dist/gif-stream.js"></script>
   <script type="text/javascript">
     const container = document.getElementById('image-container')
-
-    function handler(data) {
-      const image = document.createElement('img')
-      image.setAttribute('src', data.imageData)
-      container.appendChild(image)
-    }
+    const startButton = document.getElementById('start')
+    const stopButton = document.getElementById('stop')
 
     const options = {
-      callback: handler,
-      interval: 1000,
+      callback: (data) => {
+        const image = document.createElement('img')
+        image.setAttribute('src', data.imageData)
+        container.appendChild(image)
+      },
+      interval: 2500,
     }
 
     const stream = new GifStream(options)
-    stream.start()
-      .then(() => {
-        console.log('GifStream is ready')
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+
+    function enableStart() {
+      startButton.disabled = false
+      stopButton.disabled = true
+    }
+
+    function enableStop() {
+      startButton.disabled = true
+      stopButton.disabled = false
+    }
+
+    function start() {
+      stream.start()
+        .then(() => {
+          enableStop()
+        })
+        .catch((err) => {
+          window.alert('An error occurred.')
+          enableStart()
+        })
+    }
+
+    function stop() {
+      stream.stop()
+      enableStart()
+    }
+
+    startButton.addEventListener('click', start)
+    stopButton.addEventListener('click', stop)
+
+    enableStart()
   </script>
 </body>
 </html>

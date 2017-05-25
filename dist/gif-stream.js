@@ -15,7 +15,7 @@ function getUserMediaPolyfill(constraints) {
 }
 
 var DEFAULT_IMAGE_SIZE = 100;
-var IMAGE_QUALITY = 1.0;
+var IMAGE_QUALITY = 0.8;
 var canvas = document.createElement('canvas');
 var context = canvas.getContext('2d');
 function resizedVideostill(video) {
@@ -70,6 +70,7 @@ var GifStream = function () {
     classCallCheck(this, GifStream);
     this.options = Object.assign({}, defaultOptions, customOptions);
     this.video = document.createElement('video');
+    this.stream = null;
     this.intervalTask = null;
   }
   createClass(GifStream, [{
@@ -85,7 +86,7 @@ var GifStream = function () {
     value: function start() {
       var _this = this;
       if (this.intervalTask) {
-        return Promise.reject(new Error('Stream is already running'));
+        return Promise.resolve();
       }
       var constraints = {
         video: true,
@@ -93,14 +94,14 @@ var GifStream = function () {
       };
       return new Promise(function (resolve, reject) {
         getUserMediaPolyfill(constraints).then(function (stream) {
+          _this.stream = stream;
           try {
             _this.video.oncanplay = function () {
-              _this.handleNext();
               _this.intervalTask = setInterval(function () {
                 _this.handleNext();
               }, _this.options.interval);
             };
-            _this.video.src = window.URL.createObjectURL(stream);
+            _this.video.src = window.URL.createObjectURL(_this.stream);
             _this.video.play();
             resolve();
           } catch (error) {
@@ -114,6 +115,10 @@ var GifStream = function () {
     value: function stop() {
       if (!this.intervalTask) {
         return;
+      }
+      var track = this.stream.getTracks()[0];
+      if (track) {
+        track.stop();
       }
       clearInterval(this.intervalTask);
       this.intervalTask = null;

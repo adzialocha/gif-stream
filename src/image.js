@@ -1,5 +1,5 @@
 const DEFAULT_IMAGE_SIZE = 100
-const IMAGE_QUALITY = 1.0
+const IMAGE_QUALITY = 0.8
 
 const canvas = document.createElement('canvas')
 const context = canvas.getContext('2d')

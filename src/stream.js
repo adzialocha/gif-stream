@@ -1,5 +1,5 @@
 import getUserMediaPolyfill from './utils/polyfill'
-import resizedVideostill from './screenshot'
+import resizedVideostill from './image'
 
 const defaultOptions = {
   interval: 10000,
@@ -11,6 +11,8 @@ class GifStream {
   constructor(customOptions) {
     this.options = Object.assign({}, defaultOptions, customOptions)
     this.video = document.createElement('video')
+
+    this.stream = null
     this.intervalTask = null
   }
 
@@ -24,7 +26,7 @@ class GifStream {
 
   start() {
     if (this.intervalTask) {
-      return Promise.reject(new Error('Stream is already running'))
+      return Promise.resolve()
     }
 
     const constraints = {
@@ -35,15 +37,15 @@ class GifStream {
     return new Promise((resolve, reject) => {
       getUserMediaPolyfill(constraints)
         .then((stream) => {
+          this.stream = stream
+
           try {
             this.video.oncanplay = () => {
-              this.handleNext()
-
               this.intervalTask = setInterval(() => {
                 this.handleNext()
               }, this.options.interval)
             }
-            this.video.src = window.URL.createObjectURL(stream)
+            this.video.src = window.URL.createObjectURL(this.stream)
             this.video.play()
 
             resolve()
@@ -58,6 +60,11 @@ class GifStream {
   stop() {
     if (!this.intervalTask) {
       return
+    }
+
+    const track = this.stream.getTracks()[0]
+    if (track) {
+      track.stop()
     }
 
     clearInterval(this.intervalTask)
