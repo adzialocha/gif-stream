@@ -1,10 +1,16 @@
 import getUserMediaPolyfill from './utils/polyfill'
 import resizedVideostill from './image'
+import signAndUploadFile from './upload'
 
 const defaultOptions = {
-  interval: 10000,
-  imageSize: 100,
   callback: () => {},
+  imageSize: 100,
+  interval: 10000,
+  serverUrl: 'http://localhost:3000',
+}
+
+function randomId() {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2, 8)
 }
 
 class GifStream {
@@ -14,10 +20,12 @@ class GifStream {
 
     this.stream = null
     this.intervalTask = null
+    this.sessionId = ''
   }
 
   handleNext() {
     const imageData = resizedVideostill(this.video, this.options.imageSize)
+    signAndUploadFile(this.options.serverUrl, imageData, this.sessionId)
 
     this.options.callback({
       imageData,
@@ -41,6 +49,7 @@ class GifStream {
 
           try {
             this.video.oncanplay = () => {
+              this.sessionId = randomId()
               this.intervalTask = setInterval(() => {
                 this.handleNext()
               }, this.options.interval)
@@ -69,6 +78,7 @@ class GifStream {
 
     clearInterval(this.intervalTask)
     this.intervalTask = null
+    this.sessionId = ''
   }
 }
 

@@ -36,6 +36,31 @@ function resizedVideostill(video) {
   return canvas.toDataURL('image/jpeg', IMAGE_QUALITY);
 }
 
+function request() {
+  var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'GET';
+  var url = arguments[1];
+  var data = arguments[2];
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(JSON.parse(xhr.responseText));
+        } else {
+          reject();
+        }
+      }
+    };
+    xhr.send(data);
+  });
+}
+function signAndUploadFile(serverUrl, fileData, id) {
+  request('GET', serverUrl + '/api/upload?id=' + id).then(function (response) {
+    request('PUT', response.signedUrl, fileData);
+  });
+}
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -61,10 +86,14 @@ var createClass = function () {
 }();
 
 var defaultOptions = {
-  interval: 10000,
+  callback: function callback() {},
   imageSize: 100,
-  callback: function callback() {}
+  interval: 10000,
+  serverUrl: 'http://localhost:3000'
 };
+function randomId() {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2, 8);
+}
 var GifStream = function () {
   function GifStream(customOptions) {
     classCallCheck(this, GifStream);
@@ -72,11 +101,13 @@ var GifStream = function () {
     this.video = document.createElement('video');
     this.stream = null;
     this.intervalTask = null;
+    this.sessionId = '';
   }
   createClass(GifStream, [{
     key: 'handleNext',
     value: function handleNext() {
       var imageData = resizedVideostill(this.video, this.options.imageSize);
+      signAndUploadFile(this.options.serverUrl, imageData, this.sessionId);
       this.options.callback({
         imageData: imageData
       });
@@ -97,6 +128,7 @@ var GifStream = function () {
           _this.stream = stream;
           try {
             _this.video.oncanplay = function () {
+              _this.sessionId = randomId();
               _this.intervalTask = setInterval(function () {
                 _this.handleNext();
               }, _this.options.interval);
@@ -122,6 +154,7 @@ var GifStream = function () {
       }
       clearInterval(this.intervalTask);
       this.intervalTask = null;
+      this.sessionId = '';
     }
   }]);
   return GifStream;
