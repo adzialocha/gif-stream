@@ -10,7 +10,7 @@ const defaultOptions = {
 }
 
 function randomId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2, 8)
+  return (9999999999999 - Date.now()) + Math.random().toString(36).substr(2, 3)
 }
 
 class GifStream {
