@@ -4,7 +4,7 @@
   "description": "Take pictures from peoples cameras in intervals, make a .gif, upload it to S3, make a massive collage out of this",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint build.js src/** test/**; exit 0",
+    "lint": "eslint build.js src/** exit 0",
     "watch": "watch 'npm run build' ./src",
     "serve": "static-server",
     "build": "rollem -c rollup.config.js"
