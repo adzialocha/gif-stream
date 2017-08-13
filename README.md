@@ -7,7 +7,7 @@ gif-stream
 <div id="image-container"></div>
 <button id="start">Start</button>
 <button id="stop">Stop</button>
-<script type="text/javascript" src="dist/gif-stream.js"></script>
+<script type="text/javascript" src="lib/gif-stream.min.js"></script>
 <script type="text/javascript">
   const container = document.getElementById('image-container')
   const startButton = document.getElementById('start')

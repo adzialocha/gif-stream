@@ -4,8 +4,8 @@ import cleanup from 'rollup-plugin-cleanup'
 
 const options = {
   entry: 'src/stream.js',
-  dest: 'lib/gif-stream.js',
-  sourceMap: true,
+  dest: 'lib/index.js',
+  sourceMap: false,
   moduleName: 'GifStream',
   plugins: [
     babel({
@@ -25,6 +25,6 @@ export default [
   Object.assign({}, options, {
     dest: 'lib/gif-stream.min.js',
     plugins: options.plugins.concat(uglify()),
-    sourceMap: false,
+    sourceMap: true,
   }),
 ]
