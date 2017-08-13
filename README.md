@@ -1,9 +1,11 @@
 gif-stream
 ======
 
+Simple client to take, resize and upload single images to .gif stream server. Go to https://github.com/adzialocha/gif-stream-server for server side code.
+
 ## Example
 
-```
+```html
 <div id="image-container"></div>
 <button id="start">Start</button>
 <button id="stop">Stop</button>
