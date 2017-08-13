@@ -20,7 +20,7 @@ gif-stream
       container.appendChild(image)
     },
     interval: 2500,
-    serverUrl: 'https://hoffnung3000-gif-stream.herokuapp.com',
+    serverUrl: 'https://your-gif-stream-server.herokuapp.com',
   }
 
   const stream = new GifStream(options)

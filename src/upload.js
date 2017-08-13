@@ -5,7 +5,11 @@ function request(method = 'GET', url, data) {
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          resolve(JSON.parse(xhr.responseText))
+          if (xhr.responseText.length > 0) {
+            resolve(JSON.parse(xhr.responseText))
+          } else {
+            resolve()
+          }
         } else {
           reject()
         }
