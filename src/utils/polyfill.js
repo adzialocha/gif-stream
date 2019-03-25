@@ -1,8 +1,16 @@
 export default function getUserMediaPolyfill(constraints) {
-  const getUserMedia = (window.navigator.getUserMedia ||
-      window.navigator.webkitGetUserMedia ||
-      window.navigator.mozGetUserMedia ||
-      window.navigator.msGetUserMedia)
+  if (window.navigator.mediaDevices === undefined) {
+    window.navigator.mediaDevices = {}
+  }
+
+  if (window.navigator.mediaDevices.getUserMedia !== undefined) {
+    return window.navigator.mediaDevices.getUserMedia(constraints)
+  }
+
+  const getUserMedia = (
+    window.navigator.webkitGetUserMedia
+    || window.navigator.mozGetUserMedia
+  )
 
   if (!getUserMedia) {
     return Promise.reject(
