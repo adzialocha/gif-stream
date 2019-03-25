@@ -5,8 +5,7 @@ const canvas = document.createElement('canvas')
 const context = canvas.getContext('2d')
 
 export default function resizedVideostill(video, imageSize = DEFAULT_IMAGE_SIZE) {
-  const videoWidth = video.videoWidth
-  const videoHeight = video.videoHeight
+  const { videoWidth, videoHeight } = video
 
   if (!(videoWidth && videoHeight)) {
     return 'data:image/jpeg;base64,'
