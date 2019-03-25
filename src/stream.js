@@ -54,7 +54,8 @@ class GifStream {
                 this.handleNext()
               }, this.options.interval)
             }
-            this.video.src = window.URL.createObjectURL(this.stream)
+
+            this.video.srcObject = this.stream
             this.video.play()
 
             resolve()
