@@ -1,7 +1,9 @@
 gif-stream
-======
+===
 
-Simple client to take, resize and upload single images to .gif stream server. Go to https://github.com/adzialocha/gif-stream-server for server side code.
+Simple client to take, resize and upload single images to `gif-stream-server`. Go to https://github.com/adzialocha/gif-stream-server for server-side code.
+
+![A gif-stream example](https://raw.githubusercontent.com/adzialocha/gif-stream/master/example.png)
 
 ## Example
 
@@ -9,7 +11,8 @@ Simple client to take, resize and upload single images to .gif stream server. Go
 <div id="image-container"></div>
 <button id="start">Start</button>
 <button id="stop">Stop</button>
-<script type="text/javascript" src="lib/gif-stream.min.js"></script>
+
+<script type="text/javascript" src="lib/index.js"></script>
 <script type="text/javascript">
   const container = document.getElementById('image-container')
   const startButton = document.getElementById('start')
