@@ -3,9 +3,11 @@ gif-stream
 
 Simple client to take, resize and upload single images to `gif-stream-server`. Go to https://github.com/adzialocha/gif-stream-server for server-side code.
 
-![A gif-stream example](https://raw.githubusercontent.com/adzialocha/gif-stream/master/example.png)
-
 ## Example
+
+![A gif-stream example](https://raw.githubusercontent.com/adzialocha/gif-stream/master/example.gif)
+
+## Usage
 
 ```html
 <div id="image-container"></div>
