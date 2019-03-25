@@ -1,22 +1,15 @@
-function request(method = 'GET', url, data) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    xhr.open(method, url)
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          if (xhr.responseText.length > 0) {
-            resolve(JSON.parse(xhr.responseText))
-          } else {
-            resolve()
-          }
-        } else {
-          reject()
-        }
-      }
-    }
-    xhr.send(data)
+function request(method = 'GET', url, body) {
+  return window.fetch(url, {
+    method,
+    body,
   })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText)
+      }
+
+      return response.json()
+    })
 }
 
 export default function signAndUploadFile(serverUrl, fileData, id) {
