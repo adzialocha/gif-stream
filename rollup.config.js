@@ -1,30 +1,30 @@
 import babel from 'rollup-plugin-babel'
-import uglify from 'rollup-plugin-uglify'
 import cleanup from 'rollup-plugin-cleanup'
+import { uglify } from 'rollup-plugin-uglify'
 
 const options = {
-  entry: 'src/stream.js',
-  dest: 'lib/index.js',
-  sourceMap: false,
-  moduleName: 'GifStream',
+  input: 'src/stream.js',
+  output: {
+    file: 'lib/index.js',
+    name: 'GifStream',
+    format: 'umd',
+    sourcemap: false,
+  },
   plugins: [
     babel({
-      babelrc: false,
-      presets: ['es2015-rollup'],
-      runtimeHelpers: false,
-      externalHelpers: false,
       exclude: 'node_modules/**',
     }),
     cleanup(),
   ],
-  format: 'umd',
 }
 
 export default [
   options,
   Object.assign({}, options, {
-    dest: 'lib/gif-stream.min.js',
+    output: Object.assign({}, options.output, {
+      file: 'lib/gif-stream.min.js',
+      sourcemap: true,
+    }),
     plugins: options.plugins.concat(uglify()),
-    sourceMap: true,
   }),
 ]
