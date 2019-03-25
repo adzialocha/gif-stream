@@ -17,7 +17,7 @@
   <div id="image-container"></div>
   <button id="start">Start</button>
   <button id="stop">Stop</button>
-  <script type="text/javascript" src="dist/gif-stream.js"></script>
+  <script type="text/javascript" src="lib/index.js"></script>
   <script type="text/javascript">
     const container = document.getElementById('image-container')
     const startButton = document.getElementById('start')
@@ -50,7 +50,8 @@
         .then(() => {
           enableStop()
         })
-        .catch((err) => {
+        .catch(err => {
+          console.log(err)
           window.alert('An error occurred.')
           enableStart()
         })
